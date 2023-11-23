@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhk.suppermall.mapper.CmsSubjectMapper">
+    <resultMap id="BaseResultMap" type="com.hhk.suppermall.pojo.CmsSubject">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="pic" property="pic" jdbcType="VARCHAR" />
+        <result column="show_status" property="showStatus" jdbcType="INTEGER" />
+        <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="product_count" property="productCount" jdbcType="INTEGER" />
+        <result column="recommend_status" property="recommendStatus" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="collect_count" property="collectCount" jdbcType="INTEGER" />
+        <result column="read_count" property="readCount" jdbcType="INTEGER" />
+        <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+        <result column="album_pics" property="albumPics" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="forward_count" property="forwardCount" jdbcType="INTEGER" />
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.hhk.suppermall.pojo.CmsSubject" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGNVARCHAR" />
+    </resultMap>
+    <sql id="BaseColumnList">
+        id, category_id, title, pic, product_count, recommend_status, create_time, collect_count,
+    read_count, comment_count, album_pics, description, show_status, forward_count, category_name
+    </sql>
+    <sql id="BlobColumnList">
+        content
+    </sql>
+    <select id="selectAllCmsSubject" resultMap="BaseResultMap">
+        select distinct
+            <include refid="BaseColumnList" />
+            from cms_subject
+    </select>
+    <select id="getListByKeyword" resultMap="BaseResultMap">
+        select  distinct
+            <include refid="BaseColumnList" />
+            from cms_subject
+            <if test="keyword != null and keyword !='' ">
+             where title like #{keyword}
+            </if>
+    </select>
+</mapper>
