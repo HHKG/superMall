@@ -103,7 +103,7 @@ public class MinioController {
     public CommonResult deleteFile(@RequestParam(value = "objectName") String objectName){
         try{
             MinioClient minioClient = MinioClient.builder()
-                    .endpoint(ENDPOINT)
+                    .endpoint(ENDPOINT,PORT,false)
                     .credentials(ACCESS_KEY,SECRET_KEY)
                     .build();
             minioClient.removeObject(RemoveObjectArgs.builder().bucket(BUCKET_NAME).object(objectName).build());
