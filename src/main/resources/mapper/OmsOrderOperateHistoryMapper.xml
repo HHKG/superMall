@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhk.suppermall.mapper.OmsOrderOperateHistoryMapper">
+    <resultMap id="BaseResultMap" type="com.hhk.suppermall.pojo.OmsOrderOperateHistory">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="operate_man" property="operateMan" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        id,order_id,operate_man,create_time,order_status,note
+    </sql>
+    <insert id="insertList">
+        insert into oms_order_operate_history(order_id,operate_man,create_time,order_status,note)
+        values
+            <foreach collection="list" item="item" separator="," index="index">
+                (#{item.orderId}, #{item.operateMan}, #{item.createTime}, #{item.orderStatus}, #{item.note})
+            </foreach>
+    </insert>
+    <select id="queryOrderOperateHistoryList" resultMap="BaseResultMap">
+        select distinct
+        <include refid="BaseColumnList"/>
+            from oms_order_operate_history
+            where order_id = #{orderId}
+    </select>
+</mapper>
